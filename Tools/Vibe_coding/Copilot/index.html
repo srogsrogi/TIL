@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹 챗봇</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="floating-quote"></div>
+    <div class="chatbot-container">
+        <div class="chat-header">
+            챗봇
+            <div class="header-buttons">
+                <button id="settings-btn" title="설정" class="settings-btn">⚙️</button>
+                <div class="mode-switch-container-inside">
+                    <label class="switch" title="다크/라이트 모드 전환">
+                        <input type="checkbox" id="mode-switch">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="mode-label">🌙/☀️</span>
+                </div>
+            </div>
+        </div>
+        <!-- 설정 모달 -->
+        <div id="settings-modal" class="settings-modal">
+            <div class="settings-modal-content">
+                <span class="settings-modal-title">챗봇 말투 설정</span>
+                <div class="settings-options">
+                    <label><input type="radio" name="polite-mode" value="polite" checked> 존댓말</label>
+                    <label><input type="radio" name="polite-mode" value="casual"> 반말</label>
+                </div>
+                <button id="settings-close-btn" class="settings-close-btn">닫기</button>
+            </div>
+        </div>
+        <div class="chat-window" id="chat-window"></div>
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="메시지를 입력하세요..." autocomplete="off" required />
+            <button type="submit">전송</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
