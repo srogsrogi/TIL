@@ -1,6 +1,6 @@
 # 패킹 | 언패킹
 
-![image](/image.png)
+![image](./image.png)
 
 ## 패킹
 
