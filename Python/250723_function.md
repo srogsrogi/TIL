@@ -91,3 +91,42 @@ def factorial(n):
   - 근데 비단조적이더라도 시행횟수가 유한해서 언젠가 종료조건에 도달하는 것이 보장되어야 오버플로우가 안 나겠지.
 - Q2-2. 근데뭐 쓰기 나름이니까.. 종료되지 않는 재귀더라도 그냥 flag 걸어서 일정 횟수 후에 종료되도록 할수도 있는 거고(크게 보면 이것도 단조수렴이긴 하겠지만), 아예 끝나지 않더라도 그 과정을 로깅하는게 의미가 있는 작업일 수도 있으니까 무조건 뭐만 맞다고 할 수는 없겠네
   - 그치. 헬스체크나 모니터링 등 의도된 비종료 재귀함수들도 있고, 항상 함수의 return값만 중요한게 아니라 실행되는 과정 자체가 의미가 있는 경우도 있고. 네 말대로 다 쓰기 나름임.
+
+
+
+## lambda 표현식
+
+- 한 줄 짜리 간단한 익명함수를 만드는 표현식
+
+  ```python
+  def add(x, y):
+  	return x + y
+  	
+  lambda x, y  : x + y
+  ```
+
+  ```python
+  addition = lambda x, y : x + y
+  result = addition(3,4)
+  print(result) # 7
+  ```
+
+  ```python
+  # 이름 길이 기준으로 정렬
+  names = ['kim', 'lee', 'park']
+  sorted_names = sorted(names, key=lambda x: len(x))
+  print(sorted_names)  # ['kim', 'lee', 'park']
+  ```
+
+  ```python
+  # map함수 응용
+  numbers = [1,2,3,4,5]
+  
+  def square(num):
+  	return num ** 2
+  	
+  squared_1 = list(map(square, numbers))
+  print(squared_1)
+  
+  squared_2 = list(map(lambda num: num ** 2, numbers))
+  ```
