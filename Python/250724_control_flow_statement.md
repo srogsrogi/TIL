@@ -25,6 +25,31 @@
 
 
 
+## flag를 iterable의 index로 동시에 활용
+
+- 처음 써보는 방식이라 남겨둠..
+
+```python
+count = 0
+
+while count < len(food_list):
+    food = food_list[count]
+
+    if food['이름'] == '토마토':
+        food['종류'] = '과일'
+
+    if food['이름'] == '자장면':
+        print('자장면엔 고춧가루지')
+
+    print(f'{food['이름']} 은/는 {food['종류']}이다.')
+    count += 1
+print(food_list)
+```
+
+
+
+
+
 ## 질문/답변
 
 - Q1. range() 안에 int 말고 다른 자료형이 올 수가 있나?
