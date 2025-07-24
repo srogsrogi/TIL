@@ -111,7 +111,7 @@ upper_characters
 
 #### 3-2. lambda 함수 적용
 
-- `[lambda 변수 : 표현식(변수) for 변수 in 이터러블]`
+- `[lambda x : 표현식(x) for x in 이터러블]`
 
 ```python
 list(map(lambda x: x * x, [1,2,3])) # [1,4,9]
