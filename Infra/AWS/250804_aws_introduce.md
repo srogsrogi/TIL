@@ -23,7 +23,9 @@
 
 ## AWS 주요 서비스
 
-![image](/image.png)
+- 우리가 free-tier로 가볍게 써볼 건 Elastic Beanstalk, EC2, S3(static files의 저장소) 정도?
+
+![image](./image.png)
 
 ## About Free-tier
 
