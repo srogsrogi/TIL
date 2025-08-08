@@ -23,7 +23,7 @@
 - DNS
   - domain의 개념
   - namecheap을 통한 domain 구매
-  - DNS 설정을 통한 EC-2 서버주소 연결
+  - DNS record 설정을 통한 EC-2 서버주소 연결
 
 
 
@@ -71,8 +71,10 @@
   - git branch
   - github actions를 통한 CI/CD 환경 구축
   - ssl인증서 발급 및 https 연결
-  - django 웹앱의 기본 구조(nginx, uvicorn/gunicorn 등의 개념)
-  - 등의 주제를 하나하나 단편적으로 공부해볼 수 있는 시간들을 만들어보려 합니다.
+  - django 웹앱의 기본 구조(html, css, js, fastapi...)
+  - 그리고 웹과 직접적인 관련이 없는 다양한 주제
+  - 등을 하나하나 공부해볼 수 있는 특강을 만들어보려 합니다.
+  - 관심 있는 주제가 있다면 미리 말씀해주셔도 좋을 것 같습니다.
 
 
 

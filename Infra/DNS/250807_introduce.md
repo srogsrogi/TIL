@@ -16,7 +16,7 @@
     - www.naver.com -> naver.com
 - Namecheap 입력 예시 (`@`는 Root 도메인을 의미함)
 
-![](/image.png)
+![](./image.png)
 
 
 
@@ -26,6 +26,6 @@
 
 - AWS의 클라우드 서버를 이용할 때 좀 더 편하게 DNS 관련 설정을 관리할 수 있음
 
-  ![](/image2.png)
+  ![](./image2.png)
 
  

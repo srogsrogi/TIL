@@ -40,7 +40,7 @@
 
   ```python
   for j in range(N-1):
-      for k in range(N-1): # range(N-1-j)가 2배 더 효율적
+      for k in range(N-1): # range(N-1-j)가 최대 2배 더 효율적
           # 왼쪽 수가 더 큰 경우 자리바꾸기 -> 오름차순
           if numbers[k] > numbers[k+1]:
               numbers[k], numbers[k+1] = numbers[k+1], numbers[k]
