@@ -1,6 +1,4 @@
-# AWS, http, django 초안
-
-## 얼추 아는거
+# 다뤄볼만한 주제
 
 - ec2
   - fastapi서버
@@ -42,17 +40,11 @@
 
 ## 잘 모르는 키워드
 
-- uvicorn, gunicorn
-- sync async await...
-- nginx
-  - reverse proxy
+- sync async
 - 내외부 PORT 설정
-- http 프로토콜?
 - fastapi
 - ASGI WSGI
-
 - rest api | restful
-- AWS IAM
 - 로깅
 
 
