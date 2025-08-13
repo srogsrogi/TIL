@@ -7,41 +7,32 @@
   - 온갖 ai모델 돌아가는 추론서버(yolo, maskrcnn, 챗봇, twilio openai websocket) 만듦
   - 보통 ec2에서 했지만 로컬서버 만들고 ngrok으로 터널링도 해봄
   - sagemaker나 runpod같은 대안도 알고는 있음
-
 - eb - 웹서버 통합 관리
 
   - 브레드스캔소, 태워줘 웹
   - alb / nlb
-  
 - route53 - DNS설정
 
   - 원래 acm까지 연결해서 쓰고 있었을 것 같은데.. 과금돼서 지워버리고
   - 직접 let's encrypt ssl인증서 발급했음
-
 - s3 - static파일 관리
 
   - 로그, 더미데이터, 이미지/영상/음성파일 등 저장
   - 큰 데이터는 직접 저장하는게 아니라 참조할 주소를 저장
-
 - 환경변수 관리
 
   - .env
   - 컨테이너 실행시 CLI로 직접 변수 하나하나 등록하는 것도 가능
   - docker run할 때 `--env-file` 옵션
   - api key, debug=, PORT 등
-
-- CI/CD(github actions)
-
-  - 예진이꺼 보고 정리
-
+- CI/CD
+  - github actions
+  
 - HTML, CSS
 
   - iframe 태그, Youtube Embed 주소 연결
-
 - JavaScript
-
 - React / Vue
-
 - Django
 
 
@@ -53,7 +44,7 @@
 - logging / monitoring
 - CORS
 
-### 
+
 
 - VPC / subnet / 보안그룹 관계 / NAT
 - DB vs RDS
