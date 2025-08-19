@@ -54,6 +54,8 @@
 
 ##### main을 중심으로 해서 branch 뻗어나가는 그림 그려주고 간략하게 설명
 
+##### 다음 주제인 CI/CD와의 연관성 설명(dev -> main branch로 merge되는 것이 trigger가 됨)
+
 ##### `250813_branch.md`를 수업자료로 하여 브랜치와 ff merge, non-ff merge 설명
 
 
@@ -62,15 +64,17 @@
 
 
 
-##### 실습은 다음 차시에 진행하거나, 아예 git 심화 강의를 따로 편성해서 진행해야 할 듯.
-
-##### 설명할 개념도 너무 많고 실습 자체도 할게 많음
+##### 실습은 다음 차시에 진행할 것. 설명할 개념도 너무 많고 실습 자체도 할게 많음
 
 - Github repo 만들기
 - repo 설정에서 main 브랜치 보호 설정
   - 다양한 보호 옵션 둘러보기
 - repo에 새 브랜치 만들기
 - 각각의 branch에서 여러 커밋 만들기
+  - dev에서 main의 이니셜커밋까지 다 보이는지 확인
+- detached commit 만들기
+  - 브랜치 옮겨서 안 보이는 거 확인
+  - git log, git reflog 확인
 - switch로 HEAD 옮기기
 - ff merge, non-ff merge 실습
 - branch 삭제
@@ -79,5 +83,5 @@
 - conflict의 발생과 해결법
   - 한 쪽 변경사항 폐기
   - in-line 충돌 해결
-- fork - pr - merge 해보기
+- fork - pr - merge 설명 + 실습
 - sourcetree 체험
