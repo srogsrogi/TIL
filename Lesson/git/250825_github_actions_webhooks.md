@@ -18,7 +18,7 @@
 
 - Actions와 Webhook에 대한 간략한 설명
   - 각 개념/기능의 정의 및 활용법
-  - Incoming / Outgoin Webhooks 구분
+  - Incoming / Outgoing Webhooks 구분
   - Repo secret 사용의 필요성 등
 
 
@@ -30,3 +30,4 @@
   - yaml 파일 작성(GPT)
   - Github Actions에서 workflow 추가/확인
   - commit - push - 알림 오는지 확인
+  - Actions / Webhooks 로그 확인
