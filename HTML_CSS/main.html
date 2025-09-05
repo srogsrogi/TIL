@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ThRead - Main</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      /* ================= Design System (공통) ================= */
+      /* 폰트 */
+      @font-face {
+        font-family: "SBAggro_L";
+        src: url("assets/fonts/SBAggroOTF_L.ttf") format("ttf");
+      }
+      @font-face {
+        font-family: "GmarketSansTTFMedium";
+        src: url("assets/fonts/GmarketSansTTFMedium.ttf") format("ttf");
+      }
+
+      :root{
+        --color-accent:#fe4a51;
+        --text-main:#333;
+        --section-gap:3.5rem;
+        --radius-lg:0.75rem;
+      }
+
+      body{
+        margin:0;
+        padding:0;
+        color:var(--text-main);
+        font-family:"Helvetica Neue", Arial, sans-serif;
+        background:#fff;
+      }
+
+      /* 섹션 공통 폭/여백 (F07) */
+      .container-80, .o-container, .o-container-80, .bestseller-container, .popular-thread{
+        width:80%;
+        margin:0 auto;
+      }
+      section{ padding: var(--section-gap) 0; }
+
+      /* 공통 타이틀 */
+      .section-title{
+        font-family:"GmarketSansTTFMedium", "Helvetica Neue", Arial, sans-serif;
+        font-weight:700;
+        font-size:1.5rem;
+        margin:0 0 0.5rem 0;
+      }
+      .section-subtitle{
+        font-family:"SBAggro_L","Helvetica Neue",Arial,sans-serif;
+        color:#6c757d;
+        margin:0;
+      }
+
+      /* 버튼/링크 등 포커스 색 일관화 */
+      a, .page-link{ color:inherit; }
+
+      /* ================= 01. Navbar & Hero ================= */
+      .navbar-brand .th { color:#fff; font-family:"GmarketSansTTFMedium"; }
+      .navbar-brand .read { color:var(--color-accent); font-family:"GmarketSansTTFMedium"; }
+      .navbar-nav .nav-link{ color:#fff; font-family:"SBAggro_L"; transition:color .2s; display: flex;}
+      .navbar-nav .nav-link:hover{ color:var(--color-accent); }
+
+      .hero-section{
+        min-height:80vh; position:relative; display:flex; align-items:center; justify-content:center; text-align:center; color:#fff;
+      }
+      .hero-section img.hero-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+      .hero-overlay{ position:absolute; inset:0; background:rgba(0,0,0,.5); z-index:2; }
+      .hero-content{ position:relative; z-index:3; }
+      .hero-title{
+        font-family:"GmarketSansTTFMedium"; font-size:2.5rem; font-weight:700; margin-bottom:1rem;
+        background:rgba(74,74,74,.6); border-radius:.2rem; padding:0 1rem;
+      }
+      .hero-subtitle{ font-weight:700; font-size:1.5rem; }
+      .hero-subtitle .th{ color:#fff; font-family:"GmarketSansTTFMedium"; }
+      .hero-subtitle .read{ color:var(--color-accent); font-family:"GmarketSansTTFMedium"; }
+
+      /* ================= 02. Bestseller (Carousel) ================= */
+      .o-book-grid .book{ text-align:center; }
+      .c-book-title{ font-size:.95rem; margin-top:.5rem; font-weight: bold;}
+      .c-book-cover{ width:150px; height:220px; object-fit:cover; border-radius:.5rem; }
+      .carousel-control-prev{ display:none; } /* 우측 Next만 */
+
+      /* ================= 03. AI Recommendation ================= */
+      .c-section-title{ font-family:"GmarketSansTTFMedium","Helvetica Neue",Arial,sans-serif; font-size:1.4rem; font-weight:700; margin:0; }
+      .c-emphasis{ color:var(--color-accent); font-family:"SBAggro_L","Helvetica Neue",Arial,sans-serif; font-size:1.3rem; }
+      .c-book-img{ max-width:120px; min-height:180px; }
+      .c-book-img--tall{ width:140px; height:210px; }
+      .u-gap-16 > * + *{ margin-left:1rem; }
+
+      /* ================= 04. Genre List (Flex 4 -> 1) ================= */
+      .o-grid{ display:flex; flex-wrap:wrap; gap:1rem; }
+      .o-grid__item{
+        flex:0 0 calc(25% - 0.75rem); max-width:calc(25% - 0.75rem);
+        position:relative; height:220px; border-radius:var(--radius-lg); overflow:hidden; background:#f5f5f5;
+      }
+      .c-genre-img{ width:100%; height:100%; object-fit:cover; display:block; }
+      .c-genre-badge{
+        position:absolute; left:.75rem; bottom:.75rem; background:rgba(0,0,0,.5); color:#fff;
+        padding:.25rem .5rem; border-radius:.5rem; font-family:"GmarketSansTTFMedium","Helvetica Neue",Arial,sans-serif; font-size:.95rem;
+      }
+
+      /* ================= 05. Popular Thread (Cards & Pagination) ================= */
+      .card-img-top{ height:180px; object-fit:cover; }
+      .thread .card{ height:100%; display:flex; flex-direction:column; }
+      .thread .card-footer{ margin-top:auto; background:#fff; border-top:0; }
+      .c-book-name{ color:var(--color-accent); }
+      .thread nav .pagination .page-link{ border:none!important; background:transparent!important; box-shadow:none!important; }
+      .thread nav .pagination .page-item.active .page-link{ color:var(--color-accent)!important; background:transparent!important; }
+
+      /* ================= Responsive ================= */
+      @media (max-width: 412px){
+        .d-412-break { 
+          display:block; 
+        }
+
+        .navbar-nav {
+          align-items: flex-end;
+        }
+        
+        /* Genre: 1열 */
+        .o-grid__item{
+          flex:0 0 100% !important; max-width:100% !important; width:100% !important; height:220px;
+        }
+        /* Cards: 1열 */
+        .thread .row > [class*="col"]{ flex:0 0 100%; max-width:100%; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 01. Navbar -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-transparent position-absolute w-100" style="z-index:1000;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><span class="th">Th</span><span class="read">Read</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="#bestseller">베스트셀러</a></li>
+            <li class="nav-item"><a class="nav-link" href="#ai-reco">AI 추천</a></li>
+            <li class="nav-item"><a class="nav-link" href="#genres">장르</a></li>
+            <li class="nav-item"><a class="nav-link" href="#threads">쓰레드</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 01. Hero -->
+    <section class="hero-section">
+      <img src="assets/nav/hero_image.jpg" alt="Hero Image" class="hero-img" />
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">AI 기반 도서 분석 및<br class="d-412-break" /> 창작 지원 통합 솔루션 서비스</h1>
+        <div class="hero-subtitle"><span class="th">Th</span><span class="read">Read</span></div>
+      </div>
+    </section>
+
+    <!-- 02. Bestseller -->
+    <section class="bestseller py-5">
+      <div class="container bestseller-container">
+        <h3 class="section-title">베스트셀러</h3>
+
+        <!-- 
+          [과제 구현]
+          - Bootstrap Carousel 사용
+          - 총 12권의 도서를 4권씩 나눈 슬라이드 (3장)
+          - 각 도서는 커버 이미지 + 제목
+          - '우측'에만 표시되는 Next 컨트롤 버튼
+        -->
+        <div id="bestsellerCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+              <div class="row g-4 o-book-grid">
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img1.jpeg" alt="도서 01" class="c-book-cover" />
+                  <div class="c-book-title">소년이 온다</div>
+                </div>
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img2.jpeg" alt="도서 02" class="c-book-cover" />
+                  <div class="c-book-title">채식주의자</div>
+                </div>
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img3.jpeg" alt="도서 03" class="c-book-cover" />
+                  <div class="c-book-title">대온실 수리 보고서</div>
+                </div>
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img4.jpeg" alt="도서 04" class="c-book-cover" />
+                  <div class="c-book-title">급류</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+              <div class="row g-4 o-book-grid">
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img5.jpeg" alt="도서 05" class="c-book-cover" />
+                  <div class="c-book-title">시간의 계곡</div>
+                </div>
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img6.jpeg" alt="도서 06" class="c-book-cover" />
+                  <div class="c-book-title">인간실격</div>
+                </div>
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img7.jpeg" alt="도서 07" class="c-book-cover" />
+                  <div class="c-book-title">노르웨이의 숲</div>
+                </div>
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img8.jpeg" alt="도서 08" class="c-book-cover" />
+                  <div class="c-book-title">정원에 대하여</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+              <div class="row g-4 o-book-grid">
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img9.jpeg" alt="도서 09" class="c-book-cover" />
+                  <div class="c-book-title">네 칼이 센가, 내 칼이 센가</div>
+                </div>
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img10.jpeg" alt="도서 10" class="c-book-cover" />
+                  <div class="c-book-title">새벽의 사원</div>
+                </div>
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img11.jpeg" alt="도서 11" class="c-book-cover" />
+                  <div class="c-book-title">워싱 머신</div>
+                </div>
+                <div class="col-6 col-md-3 book">
+                  <img src="assets/bestsellers/img12.jpeg" alt="도서 12" class="c-book-cover" />
+                  <div class="c-book-title">모순</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 우측 Next 컨트롤만 표시 -->
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#bestsellerCarousel"
+            data-bs-slide="next"
+            aria-label="다음 슬라이드"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. AI Recommendation -->
+    <section id="ai-reco" class="o-section">
+      <div class="o-container ai-recommendation">
+        <div class="row align-items-center">
+          <div class="col-12 col-lg-7">
+            <div class="d-flex flex-row align-items-end flex-wrap u-gap-16">
+              <img src="assets/ai_recommendation/img1.jpeg" alt="Bauhaus 도서 표지" class="img-fluid mt-3 c-book-img" />
+              <img src="assets/ai_recommendation/img2.jpeg" alt="Mastering AI 도서 표지" class="img-fluid c-book-img--tall" />
+              <img src="assets/ai_recommendation/img3.jpeg" alt="Design 도서 표지" class="img-fluid mt-3 c-book-img" />
+            </div>
+          </div>
+          <div class="col-12 col-lg-5 mt-4 mt-lg-0">
+            <h3 class="mb-3 c-section-title">AI 추천</h3>
+            <p class="text-muted mb-1">구매 목록, 감명 깊게 읽은 도서 등</p>
+            <p class="text-muted mb-0">사용자 <span class="c-emphasis">활동 데이터 기반</span> 인공지능 도서 추천</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. Genre List -->
+    <section id="genres" class="genre-books">
+      <div class="o-container-80">
+        <h3 class="section-title mb-4">장르별 도서 목록</h3>
+        <div class="o-grid">
+          <div class="o-grid__item">
+            <img src="assets/genre/travel.jpg" alt="여행" class="c-genre-img" />
+            <span class="c-genre-badge">여행</span>
+          </div>
+          <div class="o-grid__item">
+            <img src="assets/genre/health.jpg" alt="건강" class="c-genre-img" />
+            <span class="c-genre-badge">건강</span>
+          </div>
+          <div class="o-grid__item">
+            <img src="assets/genre/art.jpg" alt="예술" class="c-genre-img" />
+            <span class="c-genre-badge">예술</span>
+          </div>
+          <div class="o-grid__item">
+            <img src="assets/genre/history.jpg" alt="역사" class="c-genre-img" />
+            <span class="c-genre-badge">역사</span>
+          </div>
+          <div class="o-grid__item">
+            <img src="assets/genre/economy.jpg" alt="경제" class="c-genre-img" />
+            <span class="c-genre-badge">경제</span>
+          </div>
+          <div class="o-grid__item">
+            <img src="assets/genre/philosophy.jpg" alt="철학" class="c-genre-img" />
+            <span class="c-genre-badge">철학</span>
+          </div>
+          <div class="o-grid__item">
+            <img src="assets/genre/natural_science.jpg" alt="자연과학" class="c-genre-img" />
+            <span class="c-genre-badge">자연과학</span>
+          </div>
+          <div class="o-grid__item">
+            <img src="assets/genre/baby.jpg" alt="육아" class="c-genre-img" />
+            <span class="c-genre-badge">육아</span>
+          </div>
+          <div class="o-grid__item">
+            <img src="assets/genre/youth.jpg" alt="청소년" class="c-genre-img" />
+            <span class="c-genre-badge">청소년</span>
+          </div>
+          <div class="o-grid__item">
+            <img src="assets/genre/romance.jpg" alt="로맨스" class="c-genre-img" />
+            <span class="c-genre-badge">로맨스</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05. Popular Thread -->
+    <section id="threads" class="thread bg-light">
+      <div class="popular-thread">
+        <h3 class="section-title mb-1">지금 이 쓰레드</h3>
+        <h3 class="section-subtitle fs-6">최근 사람들이 많이 공감한 게시글입니다</h3>
+      </div>
+
+      <div class="container-80">
+        <div class="row g-4">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img src="assets/threads/img1.jpg" class="card-img-top" alt="thread-01" />
+              <div class="card-body">
+                <h5 class="card-title">혼잡한 환경 속에서도 집중하기</h5>
+                <p class="card-text text-muted">번잡한 공간에서 집중력을 끌어올리기 위해 시도한 루틴과 도구들에 대해 정리했어요. 실험 결과와 팁도 함께 공유합니다.</p>
+              </div>
+              <div class="card-footer"><small class="text-muted">by 정민수 · <span class="c-book-name">작심 5분의 기술</span></small></div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img src="assets/threads/img2.jpg" class="card-img-top" alt="thread-02" />
+              <div class="card-body">
+                <h5 class="card-title">실수에서 배운 놀라운 힘</h5>
+                <p class="card-text text-muted">작은 실수 하나, 같은 문제는 다르게 바라보게 만들었고 팀의 협업 방식을 바꾸는 계기가 되었습니다.</p>
+              </div>
+              <div class="card-footer"><small class="text-muted">by 이서현 · <span class="c-book-name">오답에서 길을 찾다</span></small></div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img src="assets/threads/img3.jpg" class="card-img-top" alt="thread-03" />
+              <div class="card-body">
+                <h5 class="card-title">딥워크를 위한 아침 루틴</h5>
+                <p class="card-text text-muted">2시간짜리 블록을 확보하기 위한 루틴 설계와, 루틴을 방해하는 요소를 줄이는 방법을 소개합니다.</p>
+              </div>
+              <div class="card-footer"><small class="text-muted">by 김하늘 · <span class="c-book-name">몰입의 시간</span></small></div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img src="assets/threads/img4.jpg" class="card-img-top" alt="thread-04" />
+              <div class="card-body">
+                <h5 class="card-title">작은 습관의 복리 효과</h5>
+                <p class="card-text text-muted">하루 1%의 변화가 장기적으로 어떤 차이를 만드는지, 데이터와 함께 살펴봅니다.</p>
+              </div>
+              <div class="card-footer"><small class="text-muted">by 박유리 · <span class="c-book-name">컴파운드 해빗</span></small></div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img src="assets/threads/img5.jpg" class="card-img-top" alt="thread-05" />
+              <div class="card-body">
+                <h5 class="card-title">팀 온보딩 가이드 업그레이드</h5>
+                <p class="card-text text-muted">신규 입사자의 첫 주를 더 편하게 해준 체크리스트와 문서 템플릿을 공개합니다.</p>
+              </div>
+              <div class="card-footer"><small class="text-muted">by 한유정 · <span class="c-book-name">팀의 첫 30일</span></small></div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img src="assets/threads/img6.jpg" class="card-img-top" alt="thread-06" />
+              <div class="card-body">
+                <h5 class="card-title">리모트 협업, 이렇게 바꿨다</h5>
+                <p class="card-text text-muted">비동기 커뮤니케이션을 중심으로 워크플로우를 재설계한 경험을 공유합니다.</p>
+              </div>
+              <div class="card-footer"><small class="text-muted">by 오지훈 · <span class="c-book-name">리모트의 기술</span></small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4">
+          <li class="page-item disabled"><span class="page-link" tabindex="-1" aria-disabled="true">«</span></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item active" aria-current="page"><span class="page-link">2</span></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#" aria-label="Next">»</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
