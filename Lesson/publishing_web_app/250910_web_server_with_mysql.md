@@ -1,6 +1,11 @@
 # 웹서버와 MySQL DB 함께 배포하기
 
-
+- 오늘은 학생이 두 명
+- 한 분은 그동안 학습한 내용에 대한 사전지식이 부족해서 따로 웹서버 작동구조 15분 정도 설명함
+- 추가로 설명해야 하는 내용
+  - cicd 과정 이해
+  - 환경변수 작동원리 이해
+  - EC2 인스턴스 보안그룹(PORT)에 대한 이해
 
 ## 들어가기 전에..
 
@@ -44,4 +49,22 @@
 
 ## 실습
 
-- ubuntu 서버에 **docker-ce** 설치하기
+- `.env`는 일회용 실습 상황에서는 공개해도 상관 없는 변수들만 써놓고 git에 올림
+  - 실제 개발/배포시에는 untrack
+  - github secrets 변수로 넣어주기
+- compose 명령어 설명 / `docker-compose.yml`파일 들여다보기
+  - port에 대한 이해
+  - `.env 참조`
+  - `depends_on` 필드
+  - `volumes` 필드
+- cicd 워크플로우 설명 / `ci-cd-add-mysql.yml`파일 들여다보기
+  - `.env`가 생성되는 지점 확인
+
+- `requirements.txt`와 `server.py` 확인
+  - `mysql-connector` 추가와 healthcheck endpoint 작동 방식
+
+- push 후 서버 작동 확인
+  - IPv4 주소로 접속 테스트
+- DBeaver로 서버 직접 접속
+  - CRUD 후 결과를 시각적으로 확인하기 위한 접속(학습용)
+  - 실서비스시 EC2의 3306 PORT는 막아둘 것(웹서버를 통한 간접 접근만 허용)
