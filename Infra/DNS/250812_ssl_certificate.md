@@ -49,7 +49,7 @@ CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]으로 바�
 
 ### 5. ssl인증서 발급
 
-`sudo certbot --nginx -d najungh.site -d www.najungh.site --redirect -m junghyun.na321@gmail.com --agree-tos --no-eff-email`
+`sudo certbot --nginx -d najungh.site -d www.najungh.site --redirect -m aaaaaaaaaa@gmail.com --agree-tos --no-eff-email`
 
 이거 해주면 ssl인증서 받아질 것
 
