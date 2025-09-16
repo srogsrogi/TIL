@@ -1,4 +1,38 @@
-# CI_CD 심화
+# DevOps 심화
+
+- 기존에는 Infra / 
+
+- CI / CD 중심으로 DevOps 좀 더 깊게 공부해볼건데.. 필요한 개념 얕게 한 바퀴 공부하고, 주요 Tool 실습해볼 것
+
+- 개념 들어가기 전에, 나중에 써볼 tool들 역할별로 정리해둠
+
+
+
+## 역할별 Tool 정리
+
+- CI/CD 오케스트레이터(자동화 워크플로우) : Github Actions, GitLab CI, Jenkins
+
+- 프로비저닝, IaC(클라우드 리소스 생성) : Terraform
+
+- 설정 관리 : Ansible
+
+- 컨테이너 오케스트레이션(배포) : Kubernetes, Helm, Argo CD
+
+- Observability(가시성)
+
+  - **Metrics** : Prometheus
+
+    - 지표 기반 시계열 데이터 관측
+
+  - **Logs** : ELK / EFK, Grafana Loki
+
+    - 시스템이 남기는 텍스트(입력, 에러 등) 기록
+
+  - **Traces** : Jaeger, Zipkin, OpenTelemetry
+
+    - 요청이 여러 서비스를 거쳐 가는 흐름을 추적하며 병목 추적
+
+    ##### AWS CloudWatch는 Metrics와 Logs를 동시에 커버함
 
 
 
