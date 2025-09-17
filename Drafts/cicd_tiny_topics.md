@@ -14,4 +14,5 @@
   - secret rotation
 
   - hashicorp vault
-  - quantum resistance
+  - quantum resistance'
+  - SCA(서드파티 종속성)
