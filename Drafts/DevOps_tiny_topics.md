@@ -14,5 +14,12 @@
   - secret rotation
 
   - hashicorp vault
-  - quantum resistance'
+  - quantum resistance
   - SCA(서드파티 종속성)
+
+- 캐싱
+  - 인프라 수준에서의 캐싱 전략
+
+- Chaos Engineering
+  - 시스템 복원력 테스트
+  - 일부러 인스턴스를 종료시키거나 오류를 발생시키는 실험 수행
