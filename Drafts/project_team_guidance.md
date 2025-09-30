@@ -2,16 +2,6 @@
 
 
 
-## 가상환경 세팅
-
-- 가상환경을 써야 하는 이유
-- conda 쓸지 venv 쓸지 결정 필요
-- 쓰기로 한 가상환경 세팅 방법
-- image 및 container 설정과 가상환경 동기화하는 방법
-- requirements.txt 작성법
-
-
-
 
 
 
