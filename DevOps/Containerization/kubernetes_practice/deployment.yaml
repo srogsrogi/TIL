@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: django-app
-        image: srogsrogi/k8s_practice:latest
+        image: srogsrogi/k8s_practice_2:latest
         ports:
         - containerPort: 8000
 
@@ -40,13 +40,13 @@ kind: ConfigMap
 metadata:
   name: nginx-config
 data:
-  nginx.conf: |
+  default.conf: |
     server {
         listen 80;
         server_name localhost;
 
         location / {
-            proxy_pass http://django-app-service:8000; # Pass requests to the Django service
+            proxy_pass http://django-app-service:8000;
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -92,8 +92,8 @@ metadata:
 spec:
   selector:
     app: nginx
-  type: NodePort # Using NodePort for easy access in Minikube
+  type: NodePort
   ports:
     - protocol: TCP
-      port: 80
+      port: 8080
       targetPort: 80
