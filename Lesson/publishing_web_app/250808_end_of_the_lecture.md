@@ -71,7 +71,7 @@
   - git branch
   - github actions를 통한 CI/CD 환경 구축
   - ssl인증서 발급 및 https 연결
-  - django 웹앱의 기본 구조(html, css, js, fastapi...)
+  - django 웹앱의 기본 구조(html, css, js, gunicorn...)
   - 그리고 웹과 직접적인 관련이 없는 다양한 주제
   - 등을 하나하나 공부해볼 수 있는 특강을 만들어보려 합니다.
   - 관심 있는 주제가 있다면 미리 말씀해주셔도 좋을 것 같습니다.
