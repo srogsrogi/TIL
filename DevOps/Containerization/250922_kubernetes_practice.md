@@ -152,7 +152,7 @@
   metadata:
     name: nginx-config
   data:
-    nginx.conf: |
+    default.conf: |
       server {
           listen 80;
           server_name localhost;
