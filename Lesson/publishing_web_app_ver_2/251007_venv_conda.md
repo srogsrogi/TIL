@@ -76,7 +76,7 @@
 
 ### Miniconda 설치 및 초기 설정
 
-- 링크
+- https://github.com/srogsrogi/TIL/blob/master/Lesson/how_to_install/miniconda.md
 
 
 
