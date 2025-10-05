@@ -42,9 +42,9 @@
 
 ![](./miniconda7.png)
 
-### 4. 새로만들기 클릭 후 두 개의 경로 추가
+### 4. 새로만들기 또는 찾아보기 클릭 후 세 개의 경로 추가
 
-- anaconda3과 그 하위에 있는 Scripts 디렉토리 등록
+- `anaconda3`과 그 하위에 있는 `Scripts`, `Library` 디렉토리 등록
 - 사용자 이름 및 conda 설치 경로에 따라 경로가 달라지니 주의하여 등록
 
 ![](./miniconda8.png)
