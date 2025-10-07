@@ -159,3 +159,7 @@
 
 - `conda install`과 `pip install`을 섞어 쓸 경우 패키지 관리가 힘들어질 수 있습니다.
 - conda 가상 환경에서는 `conda install`을 우선적으로 사용하고 pip는 conda에 없는 패키지를 설치할 때만 보조적으로 활용합시다.
+
+
+
+##### ※ venv와 docker 수업이 하루에 진행되어 학생 피드백 및 감상은 docker 문서에 기록함
