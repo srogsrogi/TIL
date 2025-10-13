@@ -1,4 +1,4 @@
-# WSGI | ASGI
+# Python 웹 애플리케이션 서버
 
 
 
@@ -101,7 +101,7 @@
 - Django 프로젝트의 `wsgi.py`, `asgi.py` 확인
 - wisheasy 프로젝트 구조 확인 및 코드 읽어 보기
   - `requirements.txt` : gunicorn
-  - `Dockerfile` : 마지막줄 서버 실행 구문
+  - `Dockerfile` : 마지막줄 서버 실행 구문 해석
 
 
 
