@@ -1,0 +1,243 @@
+# CI-CD
+
+
+
+## 선수 지식
+
+- 클라우드 VM과 컨테이너를 활용한 웹 앱 배포의 전체 파이프라인에 대한 구조적 이해
+
+- Git branch에 대한 이해
+- 환경 변수에 대한 이해
+
+
+
+## 학습 목표
+
+- DevOps 관점에서 CI-CD를 포함한 현대적인 웹 개발 workflow를 설명할 수 있다.
+- CI와 CD를 구분하고 각 과정의 의의를 설명할 수 있다.
+- Github Actions를 활용하여 웹 앱 자동 배포 pipeline을 완성할 수 있다.
+- 배포 중 오류 발생 시 CI-CD workflow를 따라 로그를 확인하며 디버깅할 수 있다.
+
+
+
+## Warm-up
+
+- 지난 차시까지 웹 앱 배포의 전 과정을 배우고 실습해보셨습니다.
+  - 가상 환경으로 독립된 공간 내에서의 웹 앱 개발
+  - Docker Image build 및 DockerHub 배포
+  - AWS EC2 인스턴스 생성
+  - 인스턴스 공간에서 Docker Image pull 및 Container run
+  - Nginx를 통한 Port-Forwarding
+  - DNS 설정 및 도메인 연결
+  - SSL 인증서 발급 및 활용
+
+- 이 중에서, 일회성 작업(개발, 인스턴스 생성, DNS, SSL)들을 제외한 모든 과정을 자동화해보겠습니다.
+  - CI-CD 관련 도구는 다양하지만, 우리에게 가장 접근성이 좋은 Github Actions 기능을 이용하여 실습합니다.
+
+
+
+## 이론
+
+### Github Secrets
+
+- Github에서 비밀번호, key 등 민감한 정보를 안전하게 저장하는 **환경 변수** 기능
+- 곧이어 배울 Github 기능인 `Github Actions`에서 활용됨
+- 적용 범위에 따라 `Repository | Environment | Organization` Secrets가 있음
+- 우리가 이번에 사용해볼 것은 repository 내에서 환경 변수를 공유하는 `Repository Secrets`
+
+
+
+### Github Actions
+
+- Github에서 제공하는 자동화 플랫폼
+- `push` 또는 `pull-request` 등 이벤트 발생 시 사용자가 지정한 workflow를 실행
+  - 이벤트 발생 시 가상 서버를 띄워 `.github/workflows/xxxx.yml` 설정 파일에 있는 명령을 실행
+- 주로 CI-CD 구현에 활용되는 기능
+
+
+
+### CI | CD
+
+#### CI란?
+
+- Continuous Integration
+- 작성 후 커밋된 소스 코드들을 통합 및 검증하는 과정
+- 코드 오류 발견 및 품질 보장
+
+##### CI의 주요 Task
+
+- Linting
+
+  - 프로그램을 실행하지 않고 코드의 품질을 미리 검사
+  - 소스 코드의 문법 오류, 스타일 위반 여부 등을 검사하고 일부 자동 수정도 가능
+  - Python의 경우 `flake8`과 `ruff`를 주로 사용(`ruff` 추천!)
+  - 다른 언어나 프레임워크를 위한 linting tool들도 있으니 사용하는 것들을 위한 tool을 추가하면 됨
+
+- Build test
+
+  - Github Actions 서버 내에서 Image build & test
+  - Container 실행, healthcheck, 주요 기능 smoke test 등 가능
+
+  
+
+#### CD란?
+
+- Continuous Delivery / Deployment
+- 코드를 프로덕션 환경에 지속적으로 전달 및 배포하는 과정
+
+##### CD의 주요 Task
+
+- Docker Image build
+- DockerHub push
+- 서버 환경에서 Image pull
+- Container run
+
+- 그 외 무중단 배포, 실패시 rollback 등 커스터마이징 가능
+
+
+
+### CI-CD의 필요성
+
+- 배포 안정성 향상
+  - 인프라 설정을 코드로 관리하는 **IaC(Infra as a Code)**의 기초
+  - 실행 명령어 등을 사람이 직접 입력하지 않고 자동화하여 재현성이 높음
+- 배포 속도 증가
+- 개발 - 운영 협업 효율 증가
+
+
+
+### CI-CD Pipeline
+
+- 작동 순서
+
+  1. **Trigger 작동**
+     - push, pull-request, schedule, fork, issue 등
+     - 일반적으로 main branch에 push(merge)가 이루어지면 pipeline이 작동하도록 설정
+     - 따라서 main branch에는 `직접 push 불가` 등의 보호 조건을 걸어둠
+
+  2. **CI(Build & Test)**
+     - Github Actions 서버에서 진행
+     - 사용자가 정의한 tool로 코드 문법 체크, 리팩토링 등 진행
+
+  3. **CD**
+
+     - 배포할 서버 원격 접속
+
+     - 배포 준비 및 실행
+
+  
+
+- `.github/workflows/xxxx.yml`  파일 예시
+
+```yaml
+name: Full CI/CD - Lint, Build, Push, and Deploy
+
+on: # Trigger 설정
+  push: # 이벤트 정의
+    branches: [ "main" ] # 적용 브랜치 지정 
+
+jobs: # 실행할 workflow. 여러 개의 job으로 구성
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code # 코드 복붙
+      uses: actions/checkout@v4
+
+    - name: Set up Python # CI/CD 서버에 python 설치
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies # 의존성 패키지 설치
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Lint with ruff # CI(Linting)
+      run: ruff check .
+
+    - name: Set up Docker Buildx # CD 시작, Docker image builder 준비
+      uses: docker/setup-buildx-action@v3
+
+    - name: Login to Docker Hub # DockerHub 로그인
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }} # Github Secrets 환경변수
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push Docker image 
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile # build에 사용할 Dockerfile 지정
+        push: true # Image push
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/branch_practice:latest
+
+  deploy:
+    needs: build-and-push # 요구 조건
+    runs-on: ubuntu-latest
+    steps: # Github Secrets로 EC2 인스턴스에 SSH접속
+      - name: Deploy to EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: | # SSH접속 후 Image pull, 새로운 Container run
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/branch_practice:latest
+            docker stop branch_practice_container || true
+            docker rm branch_practice_container || true
+            docker run -d --name branch_practice_container -p 80:8000 ${{ secrets.DOCKERHUB_USERNAME }}/branch_practice:latest
+```
+
+
+
+## 심화학습
+
+- CI와 CD의 trigger 설정과 프로젝트 branch 전략
+
+  - 프로젝트의 branch가 main, dev, feat/* 등으로 나뉜다고 했을 때
+  - CI는 모든 branch 또는 적어도 dev branch 단계에서 적용이 필요하지만
+  - CD는 main branch에서만 작동해야 함
+  - 따라서 실제 프로젝트 진행 시 각 workflow가 적절한 branch에 일어나는 이벤트에 반응하도록 `yml` 파일도 여러 개가 필요
+  - 지금 하고 있는 프로젝트에선 어떤 전략을, 왜 사용하고 있는지 살펴 보기
+
+  
+
+- **Artifact란?**
+
+  - workflow 실행 중 발생한 리포트, 로그 등이 사라지지 않게 저장하는 객체
+  - workflow 내 다른 job으로 데이터를 전달하는 데에도 활용
+  - Image build의 결과물, 정적파일 묶음, 압축 패키지 등
+
+
+
+- `Github Actions` workflow에서 `job`이 구분되는 이유
+
+  - 각 job은 독립된 환경(VM)에서 실행
+
+    - Host OS 분리, 충돌 방지, 보안 설정 세분화 가능
+
+  - 가독성 및 유지보수성
+
+  - 시간/리소스 효율성
+
+    - `needs`로 연결되지 않은 `job`들은 별개의 환경에서 병렬적으로 실행
+    - `needs`조건이 충족되지 않은 `job`은 실행되지 않음
+
+    
+
+- **Webhook** : Github Actions의 다른 활용법
+  - Github에서 발생한 이벤트를 외부 tool(Slack, MM 등)에서 알림받는 기능
+  - https://github.com/srogsrogi/TIL/blob/master/DevOps/CI_CD/250825_actions_webhook.md
+
+
+
+## 실습
+
+### CI
+
+
+
+### CD
+
