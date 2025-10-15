@@ -115,4 +115,5 @@
   - 자동갱신 적용여부 확인
 
 - `curl -I https://najungh.site`
+  
   - 아무 터미널에서나 입력해서 https 연결 확인
