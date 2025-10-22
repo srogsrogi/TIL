@@ -36,8 +36,14 @@
 * 강화학습(Reinforcement Learning)
 
   * 주어진 **환경** 속에서 **행동**에 따른 **보상**을 바탕으로 **누적 보상을 극대화**하며 학습하는 방법
-  * 오늘은 자세히 다루지 않을 것
-  * 학습자들이 원하면 강화학습 4요소(or 5요소)를 기반으로 아주 간단한 설명만..
+  * 강화학습의 4요소(5요소)
+    * Agent : `Environment` 안에서 `Action`을 선택하고 수행하는 주체
+    * Environment : `Agent`의 `Action`에 따른 `State`를 변화시키고 `Reward`를 제공하는 결정하는 외부 세계(규칙)
+    * (State) : `Agent`가 관찰할 수 있는 현재 상황
+    * Action : `Agent`가 특정 `State`에서 취할 수 있는 행동
+    * Reward : `Agent`가 선택한 `Action`에 따라 주어지는 피드백(보상 또는 페널티)
+  
+  * 강화학습이란, `Agent`가 `Environment`의 `State`를 관찰하며 `Action`을 선택하고, 그에 따른 피드백으로 주어지는 **누적 `Reward`를 극대화하도록 학습**하는 방법이라고 정의할 수 있다.
   
   
 
