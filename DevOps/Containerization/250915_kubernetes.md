@@ -18,7 +18,8 @@
 - Pod
   - 하나 이상의 컨테이너를 포함하는 가장 기본적인 배포 단위
   - 같은 pod 내의 컨테이너들은 리소스를 공유함
-
+  - 보통은 pod 하나는 단일 컨테이너로 구성
+  
 - Deployment
   - pod의 선언적 업데이트를 관리
   - 롤링 업데이트, 롤백 등의 기능 제공
@@ -91,7 +92,7 @@
   - NFS, Cloud storage 등 여러 형태의 storage system 지원
   - PV(Persistent Volume)과 PVC(Persistent Volume Claim)를 통해 storage 관리 추상화
 
-##### 		PV : 외부 storage에 대한 추상화된 연결 정보 객체로서, cluster 차원에 존재함. 보존이 필요한 데이터들이 		pod이 죽을 때도 사라지지 않도록 하는 역할을 수행함
+##### 		PV : 외부 storage에 대한 추상화된 연결 정보 객체로서, cluster 차원에 존재함. 보존이 필요한 데이터들이 pod이 죽을 때도 사라지지 않도록 하는 역할을 수행함
 
 ##### 		PVC : pod 개발자가 요청하는 PV에 대한 요구사항. "몇 GB의 storage가 필요하다."와 같이 추상화되어 있음
 
