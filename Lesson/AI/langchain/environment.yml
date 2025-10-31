@@ -1,0 +1,19 @@
+name: langchain_1.0_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - ipykernel
+  - notebook
+  - langchain=1.0.2
+  - langchain-core=1.0.1
+  - langchain-openai=1.0.1
+  - numpy=2.3.3
+  - pandas=2.3.3
+  - python-dotenv
+prefix: C:\Users\SSAFY\miniconda3\envs\langchain_1.0_env
+
+# UTF-8 인코딩을 강제하는 환경변수 주입
+variables:
+  PYTHONUTF8: "1"

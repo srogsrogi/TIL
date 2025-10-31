@@ -1,5 +1,7 @@
 .idea
+**/*.idea
 **/venv
 GEMINI.md
 **/*.sqlite3
 **/*.sqlite
+**/*.env
