@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.11
+  - python=3.12
   - ipykernel
   - notebook
   - langchain=1.0.2
@@ -12,6 +12,13 @@ dependencies:
   - numpy=2.3.3
   - pandas=2.3.3
   - python-dotenv
+  - pip
+
+  # pip에만 있는 패키지
+  - pip:
+    - ddgs
+    - langchain-community==0.4.1
+
 prefix: C:\Users\SSAFY\miniconda3\envs\langchain_1.0_env
 
 # UTF-8 인코딩을 강제하는 환경변수 주입
