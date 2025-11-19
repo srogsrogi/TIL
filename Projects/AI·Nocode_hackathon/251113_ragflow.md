@@ -16,7 +16,14 @@
 
 
 
-## 사용법
+## 웹 사용법
+
+- 오픈소스긴 한데 아직 demo만 제공
+- 챗봇, 에이전트 등 생성은 가능하나 API로 외부 서비스로 내보내는 기능은 아직 제공하지 않음
+
+- API 만드려면 docker로 직접 서버 돌려야 함
+
+
 
 ### 모델 설정
 
@@ -174,3 +181,37 @@
 ### File Management
 
 - Datasets에 업로드된 원본 파일을 관리하는 기능
+
+
+
+## Docker 앱 사용법
+
+- 권장사양 확인
+
+  ![](./ragflow5.png)
+
+
+
+- 공식 저장소 클론
+
+  `git clone https://github.com/infiniflow/ragflow.git`
+
+- 클론받은 디렉토리로 이동
+
+​	`cd ragflow/docker`
+
+- stable 버전으로 checkout
+
+​	`git checkout -f v0.22.0`
+
+- compose로 앱 실행()
+
+​	`docker compose -f docker-compose.yml up -d`
+
+- 로그 찍어서 실행 확인된 후에 사용할 것
+
+​	`docker logs -f docker-ragflow-cpu-1`
+
+
+
+##### 참고 : 실제 개발시 VM 위에서 docker container 띄워야 할 텐데, 임시로 띄우기엔 ec2 사양이 너무 부족해서 로컬에서 열고 ngrok으로 채널링했습니다.
