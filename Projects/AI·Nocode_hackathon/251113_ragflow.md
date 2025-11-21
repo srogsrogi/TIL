@@ -219,3 +219,6 @@ https://ragflow.io/docs/dev/
 
 
 ##### 참고 : 실제 개발시 VM 위에서 docker container 띄워야 할 텐데, 임시로 띄우기엔 ec2 사양이 너무 부족해서 로컬에서 열고 ngrok으로 터널링했습니다.
+
+
+
