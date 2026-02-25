@@ -39,38 +39,54 @@ def parse_pdf(pdf_path):
                 if not line: continue
                 
                 # 날짜 검색 (YYYY.MM.DD)
-                date_match = re.search(r'(\d{4}\.\d{2}\.\d{2})', line)
+                # 날짜와 시간이 붙어있는 경우(예: 2026.01.2607:36:44)를 대비해 전처리
+                line_fixed = re.sub(r'(\d{4}\.\d{2}\.\d{2})(\d{2}:\d{2}:\d{2})', r'\1 \2', line)
+                
+                date_match = re.search(r'(\d{4}\.\d{2}\.\d{2})', line_fixed)
                 if not date_match: continue
 
                 try:
                     date_str = date_match.group(1)
-                    time_match = re.search(r'(\d{2}:\d{2}:\d{2})', line)
+                    time_match = re.search(r'(\d{2}:\d{2}:\d{2})', line_fixed)
                     time_str = time_match.group(1) if time_match else "00:00:00"
                     
-                    # 저장용 전체 시간
-                    date_iso = f"{date_str.replace('.', '-')}T{time_str}"
+                    # 저장용 전체 시간 (KST +09:00 명시)
+                    date_iso = f"{date_str.replace('.', '-')}T{time_str}+09:00"
                     
                     # 금액 추출
-                    parts = line.split()
+                    parts = line_fixed.split()
                     numeric_parts = []
                     for p in parts:
+                        # 콤마 제거
                         clean_p = p.replace(',', '')
-                        if clean_p.isdigit():
+                        # 음수 부호(-) 처리: -1234 처럼 숫자 앞에 붙은 경우만 허용하거나
+                        # 단순히 -와 숫자로만 구성되었는지 확인
+                        # isdigit()은 음수를 인식 못하므로 lstrip('-') 사용
+                        if clean_p.lstrip('-').isdigit():
                             numeric_parts.append(int(clean_p))
                     
                     if not numeric_parts: continue
                     amount = numeric_parts[0]
                     balance = numeric_parts[1] if len(numeric_parts) > 1 else 0
                     
-                    # 구분
-                    kind = "입금" if "입금" in line else ("출금" if "출금" in line else "기타")
+                    # 구분 (텍스트 OR 금액 부호 기반)
+                    if "입금" in line_fixed:
+                        kind = "입금"
+                    elif "출금" in line_fixed:
+                        kind = "출금"
+                    else:
+                        # 한글 깨짐 대비: 금액 부호로 판단
+                        if amount < 0:
+                            kind = "출금"
+                        else:
+                            kind = "입금"
                     
                     # 메모 정제
-                    clean_memo = line
+                    clean_memo = line_fixed
                     clean_memo = re.sub(r'\d{4}\.\d{2}\.\d{2}', '', clean_memo)
                     clean_memo = re.sub(r'\d{2}:\d{2}:\d{2}', '', clean_memo)
-                    clean_memo = re.sub(r'\b\d{1,3}(,\d{3})*\b', '', clean_memo)
-                    clean_memo = re.sub(r'\b\d+\b', '', clean_memo)
+                    clean_memo = re.sub(r'\b-?\d{1,3}(,\d{3})*\b', '', clean_memo) # 콤마 포함 숫자, 음수 포함 제거
+                    clean_memo = re.sub(r'\b-?\d+\b', '', clean_memo) # 일반 숫자, 음수 포함 제거
                     clean_memo = clean_memo.replace("입금", "").replace("출금", "")
                     clean_memo = clean_memo.replace('"', '').replace("'", "").strip()
                     if not clean_memo: clean_memo = "내용없음"
